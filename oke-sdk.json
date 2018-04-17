@@ -1,0 +1,1477 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "",
+    "title" : "Manage Clusters",
+    "version" : "version not set"
+  },
+  "schemes" : [ "http", "https" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/api/v3/clusters" : {
+      "get" : {
+        "summary" : "List All Clusters",
+        "description" : "Use this endpoint to return a list of all clusters.",
+        "operationId" : "ListClusters",
+        "responses" : {
+          "200" : {
+            "description" : "List of clusters.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiListResponse"
+            }
+          }
+        },
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/version" : {
+      "get" : {
+        "summary" : "Get API version",
+        "description" : "Use this endpoint to get the version of the API.",
+        "operationId" : "GetVersion",
+        "responses" : {
+          "200" : {
+            "description" : "API version information.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiVersion"
+            }
+          }
+        },
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}" : {
+      "get" : {
+        "summary" : "List Clusters By Organization",
+        "description" : "Use this endpoint to return a list of clusters for a given organization.",
+        "operationId" : "ListClustersForOwner",
+        "responses" : {
+          "200" : {
+            "description" : "List of cluster objects for the organization specified by ownerId.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiListResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      },
+      "post" : {
+        "summary" : "Create a Cluster",
+        "description" : "Use this endpoint to create a cluster for a given organization.",
+        "operationId" : "Create",
+        "responses" : {
+          "200" : {
+            "description" : "Response to cluster creation.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiCreateResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiCreateRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/authConfigs" : {
+      "get" : {
+        "summary" : "List Credential Sets",
+        "description" : "Use this endpoint to list the named credential sets available to a given organization.",
+        "operationId" : "ListAuthConfigs",
+        "responses" : {
+          "200" : {
+            "description" : "List of named credential sets (authConfig objects).",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiListAuthConfigsResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      },
+      "post" : {
+        "summary" : "Create a Credential Set",
+        "description" : "Use this endpoint to create a named credential set for a given organization.",
+        "operationId" : "CreateAuthConfig",
+        "responses" : {
+          "200" : {
+            "description" : "A named credential set (authConfig object) without secrets.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiAuthConfigInfo"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiCreateAuthConfigRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/authConfigs/{id}" : {
+      "get" : {
+        "summary" : "Get Credential Set Details",
+        "description" : "Use this endpoint to get details of a named credential set for a given organization.",
+        "operationId" : "GetAuthConfig",
+        "responses" : {
+          "200" : {
+            "description" : "Named credential set (authConfig object) details.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiAuthConfigInfo"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Cluster ID.\n\nExample: c56ead49fb8",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      },
+      "delete" : {
+        "summary" : "Delete a Credential Set",
+        "description" : "Use this endpoint to delete a named credential set for a given organization.",
+        "operationId" : "DeleteAuthConfig",
+        "responses" : {
+          "200" : {
+            "description" : "Empty response body indicating successful deletion.",
+            "schema" : {
+              "$ref" : "#/definitions/protobufEmpty"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the credential set to delete.\n\nExample: 47b22a3ce0c4610100d47e94",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/bmc/ads" : {
+      "post" : {
+        "summary" : "List Accessible Availability Domains",
+        "description" : "Use this endpoint to list Availability Domains for a given organization.",
+        "operationId" : "GetBmcAds",
+        "responses" : {
+          "200" : {
+            "description" : "List of Availability Domains.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiGetBmcAdsResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiGetBmcAdsRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/k8sVersions" : {
+      "post" : {
+        "summary" : "Get Available Kubernetes Versions",
+        "description" : "Use this endpoint to get a list of the Kubernetes versions available for a given organization's clusters.",
+        "operationId" : "GetK8SVersions",
+        "responses" : {
+          "200" : {
+            "description" : "List of supported Kubernetes versions.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiGetK8SVersionsResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiGetK8SVersionsRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/node/images" : {
+      "post" : {
+        "summary" : "Get Available Node Images",
+        "description" : "Use this endpoint to get a list of the images available for a given organization's nodes.",
+        "operationId" : "GetNodeImages",
+        "responses" : {
+          "200" : {
+            "description" : "List of supported OS images.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiGetNodeImagesResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiGetNodeImagesRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/node/shapes" : {
+      "post" : {
+        "summary" : "Get Available Node Shapes",
+        "description" : "Use this endpoint to get a list of the shapes available for a given organization's nodes.",
+        "operationId" : "GetNodeShapes",
+        "responses" : {
+          "200" : {
+            "description" : "List of supported VM shapes.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiGetNodeShapesResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiGetNodeShapesRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/region" : {
+      "post" : {
+        "summary" : "Get Available Regions",
+        "description" : "Use this endpoint to get a list of the regions available for a given organization's clusters.",
+        "operationId" : "GetRegion",
+        "responses" : {
+          "200" : {
+            "description" : "The region for this cloudAuthId.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiGetRegionResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiGetRegionRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/workItems/{workItemId}" : {
+      "get" : {
+        "summary" : "List Work Item Details",
+        "description" : "Use this endpoint to show details of an operation (for example, a cluster creation operation) for a given organization.",
+        "operationId" : "GetWorkItem",
+        "responses" : {
+          "200" : {
+            "description" : "Details of operation specified by workItemId.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiGetWorkItemResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "workItemId",
+          "in" : "path",
+          "description" : "Work item ID.\n\nExample: 993d9a03-bc4c-4709-ad21-68c816267464",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/{clusterId}" : {
+      "get" : {
+        "summary" : "List Details of a Specific Cluster",
+        "description" : "Use this endpoint to show details of specific cluster for a given organization.",
+        "operationId" : "GetCluster",
+        "responses" : {
+          "200" : {
+            "description" : "Details of cluster specified by clusterId.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiClusterDetails"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "clusterId",
+          "in" : "path",
+          "description" : "Cluster ID.\n\nExample: a5a19a4776",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      },
+      "delete" : {
+        "summary" : "Delete a Cluster",
+        "description" : "Use this endpoint to delete a specific cluster for a given organization.",
+        "operationId" : "DeleteCluster",
+        "responses" : {
+          "200" : {
+            "description" : "ID of the cluster deletion operation.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiDeleteClusterResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "clusterId",
+          "in" : "path",
+          "description" : "The ID of the cluster to delete.\n\nExample: 47b22a3ce0c4610100d47e94",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/{clusterId}/pools" : {
+      "put" : {
+        "summary" : "Update Pools",
+        "description" : "Use this endpoint to update the node pools in a given cluster.",
+        "operationId" : "UpdatePools",
+        "responses" : {
+          "200" : {
+            "description" : "Cluster pools.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiUpdatePoolsResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "clusterId",
+          "in" : "path",
+          "description" : "Cluster ID.\n\nExample: a5a19a4776",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiUpdatePoolsRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    },
+    "/api/v3/clusters/{ownerId}/{clusterId}/upgradeK8SMaster" : {
+      "post" : {
+        "summary" : "Upgrade Kubernetes Master",
+        "description" : "Use this endpoint to upgrade the Kubernetes master in a given cluster.",
+        "operationId" : "UpgradeK8SMaster",
+        "responses" : {
+          "200" : {
+            "description" : "Upgrade details.",
+            "schema" : {
+              "$ref" : "#/definitions/clustersapiUpgradeK8SMasterResponse"
+            }
+          }
+        },
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "description" : "Wercker organization ID.\n\nExample: 59bbf8affb1beb01009cae7a",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "clusterId",
+          "in" : "path",
+          "description" : "Cluster ID.\n\nExample: a5a19a4776",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "body",
+          "in" : "body",
+          "description" : "Body parameters.",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/clustersapiUpgradeK8SMasterRequest"
+          }
+        } ],
+        "tags" : [ "Manage Clusters" ]
+      }
+    }
+  },
+  "definitions" : {
+    "clustersapiActivity" : {
+      "type" : "object",
+      "properties" : {
+        "createdAt" : {
+          "type" : "string",
+          "description" : "Parameter description."
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "Parameter description."
+        }
+      }
+    },
+    "clustersapiAd" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "description" : "The ID of the Availability Domain.",
+          "example" : "US-ASHBURN-AD-1",
+          "type" : "string"
+        },
+        "subnet" : {
+          "description" : "The subnet that the Availability Domain belongs to.",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiAdstruct" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "description" : "Name of the Availability Domain.",
+          "example" : "klOV:US-ASHBURN-AD-1",
+          "type" : "string"
+        },
+        "compartmentId" : {
+          "description" : "Compartment ID.",
+          "example" : "ocid1.compartment.oc1..aaaaaaaac6xo...",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiAuthConfigBmc" : {
+      "description" : "This object contains information about the cloud infrastructure.",
+      "type" : "object",
+      "properties" : {
+        "user" : {
+          "description" : "The OCID of the user with which to log into the tenancy.",
+          "example" : "ocid1.user.oc1..aaaaaaaaaa...",
+          "type" : "string"
+        },
+        "fingerprint" : {
+          "description" : "The fingerprint of the public key.",
+          "example" : "ce:82:e7:6d:02:a4:e3:63:3f:8a:07:cc:d5:d9:bb:bd",
+          "type" : "string"
+        },
+        "privateKey" : {
+          "description" : "The RSA private key used to access the OCI API. Passphrase-protected private keys are not allowed.",
+          "example" : "-----BEGIN RSA PRIVATE KEY----- ... -----END RSA PRIVATE KEY-----",
+          "type" : "string"
+        },
+        "tenancy" : {
+          "description" : "The OCID of the tenancy where the cluster resides.",
+          "example" : "ocid1.tenancy.oc1..aaaaaaaaf7...",
+          "type" : "string"
+        },
+        "region" : {
+          "description" : "The region where the cluster resides.",
+          "example" : "us-ashburn-1",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiAuthConfigInfo" : {
+      "description" : "The credential set details.",
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "description" : "The ID of the credential set.",
+          "example" : "ln2m6w.authconfig.6afd0fcf-7412-3f89-933c-d58ae39c63f4",
+          "type" : "string"
+        },
+        "name" : {
+          "description" : "Credential set name.",
+          "example" : "jsmithDevCreds",
+          "type" : "string"
+        },
+        "tenantId" : {
+          "description" : "The OCID of the tenancy.",
+          "example" : "ocid1.tenancy.oc1..aaaaaaaaf7...",
+          "type" : "string"
+        },
+        "cloudType" : {
+          "description" : "The type of cloud infrastructure.",
+          "example" : "bmc",
+          "type" : "string"
+        },
+        "resourceOwnerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiBmcCloudDetails" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "nodeId" : {
+          "description" : "Parameter description.",
+          "example" : "f9ad9ca8-ae6e-40d6-9fa5-e77ebff2f968",
+          "type" : "string"
+        },
+        "lbType" : {
+          "description" : "Parameter description.",
+          "example" : "100Mbps",
+          "type" : "string"
+        },
+        "lbShape" : {
+          "description" : "Parameter description.",
+          "example" : "100Mbps",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiBmcClusterConfig" : {
+      "description" : "This object contains details required to define the cluster.",
+      "type" : "object",
+      "properties" : {
+        "region" : {
+          "description" : "The region in which the cluster is being created.",
+          "example" : "us-ashburn-1",
+          "type" : "string"
+        },
+        "compartment" : {
+          "description" : "The OCID of the compartment the cluster will reside in.",
+          "example" : "ocid1.compartment.oc1..aaaaaaaac6xo...",
+          "type" : "string"
+        },
+        "vcnId" : {
+          "description" : "The OCID of the VCN that the cluster will reside in.",
+          "example" : "ocid1.vcn.oc1.ash.aaaaaaaasa...",
+          "type" : "string"
+        },
+        "sshPublicKey" : {
+          "description" : "The base64-encoded SSH public key that matches the private key to connect to the cluster.",
+          "example" : "MIIBIjANBgkqhkiG9w0BAQE...",
+          "type" : "string"
+        },
+        "pools" : {
+          "description" : "An array that contains information about the pools of nodes of the cluster.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiPool"
+          }
+        }
+      }
+    },
+    "clustersapiCloudDetails" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "bmc" : {
+          "$ref" : "#/definitions/clustersapiBmcCloudDetails"
+        }
+      }
+    },
+    "clustersapiCluster" : {
+      "description" : "Cluster details.",
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "description" : "The cluster ID.",
+          "example" : "a3a13a4373",
+          "type" : "string"
+        },
+        "name" : {
+          "description" : "The name of the cluster.",
+          "example" : "qacluster",
+          "type" : "string"
+        },
+        "tenantId" : {
+          "description" : "Tenant ID.",
+          "example" : "",
+          "type" : "string"
+        },
+        "metadata" : {
+          "description" : "Cluster metadata.",
+          "$ref" : "#/definitions/clustersapiMetadata"
+        },
+        "cloudType" : {
+          "description" : "The cloud infrastructure type.",
+          "example" : "bmc",
+          "type" : "string"
+        },
+        "authConfigId" : {
+          "description" : "Credential set ID.",
+          "example" : "wv3zx2.authconfig.2c735e58-4ce4-435e-a82c-73bfc32ddee4",
+          "type" : "string"
+        },
+        "mastersState" : {
+          "description" : "The state of the master(s).",
+          "example" : "RUNNING",
+          "type" : "string"
+        },
+        "nodesState" : {
+          "description" : "The state of the nodes.",
+          "example" : "RUNNING",
+          "type" : "string"
+        },
+        "stateDetails" : {
+          "$ref" : "#/definitions/clustersapiStateDetails"
+        },
+        "desiredState" : {
+          "description" : "The desired state.",
+          "example" : "",
+          "type" : "string"
+        },
+        "endpoints" : {
+          "$ref" : "#/definitions/clustersapiEndpoints"
+        },
+        "cloudDetails" : {
+          "$ref" : "#/definitions/clustersapiCloudDetails"
+        },
+        "resourceOwnerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5530d21f3151d2c55400006f",
+          "type" : "string"
+        },
+        "bmcClusterConfig" : {
+          "$ref" : "#/definitions/clustersapiBmcClusterConfig"
+        },
+        "k8Version" : {
+          "description" : "Kubernetes version.",
+          "example" : "v1.7.4",
+          "type" : "string"
+        },
+        "errorMessage" : {
+          "description" : "Error message.",
+          "example" : "",
+          "type" : "string"
+        },
+        "ownerName" : {
+          "description" : "Cluster owner name.",
+          "example" : "",
+          "type" : "string"
+        },
+        "availableK8SUpgrade" : {
+          "description" : "The available Kubernetes versions the master can be upgraded to.",
+          "example" : "v1.7.9",
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "clustersapiClusterDetails" : {
+      "description" : "Cluster details.",
+      "type" : "object",
+      "properties" : {
+        "k8" : {
+          "$ref" : "#/definitions/clustersapiCluster"
+        },
+        "workers" : {
+          "description" : "Array description.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiWorkerDetails"
+          }
+        }
+      }
+    },
+    "clustersapiCreateAuthConfigRequest" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "The Wercker organization ID",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        },
+        "name" : {
+          "description" : "The name to assign to the credentials.",
+          "example" : "jsmithDevCreds",
+          "type" : "string"
+        },
+        "bmc" : {
+          "$ref" : "#/definitions/clustersapiAuthConfigBmc"
+        }
+      }
+    },
+    "clustersapiCreateRequest" : {
+      "description" : "This object contains the information required to create a cluster.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "59bbf8affb1beb01009cae7a",
+          "type" : "string"
+        },
+        "name" : {
+          "description" : "The name of the cluster to create.",
+          "example" : "jsCluster",
+          "type" : "string"
+        },
+        "tenantId" : {
+          "description" : "The ID of the tenancy in which to create the cluster.",
+          "example" : "ocid1.tenancy.oc1..aaaaaaaaba3pv6wkcr4...",
+          "type" : "string"
+        },
+        "cloudType" : {
+          "description" : "The type of cloud service.",
+          "example" : "bmc",
+          "type" : "string"
+        },
+        "cloudAuthId" : {
+          "description" : "Credential set ID.",
+          "example" : "b6p1na.authconfig.58075df1-ce64...",
+          "type" : "string"
+        },
+        "lbType" : {
+          "description" : "The type of load balancer.",
+          "example" : "external",
+          "type" : "string"
+        },
+        "werckerId" : {
+          "description" : "The Wercker ID of the person creating the cluster.",
+          "example" : "jsmith",
+          "type" : "string"
+        },
+        "bmcClusterConfig" : {
+          "$ref" : "#/definitions/clustersapiBmcClusterConfig"
+        },
+        "k8Version" : {
+          "description" : "Kubernetes version.",
+          "example" : "v1.7.4",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiCreateResponse" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "workItemId" : {
+          "description" : "Work item ID.",
+          "example" : "43e1db49-700f-4b86-9800-366031781be7",
+          "type" : "string"
+        },
+        "clusterId" : {
+          "description" : "Cluster ID.",
+          "example" : "a5a19a4776",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiDeleteClusterResponse" : {
+      "description" : "The response to the cluster delete request.",
+      "type" : "object",
+      "properties" : {
+        "workItemId" : {
+          "description" : "Work item ID.",
+          "example" : "43e1db49-700f-4b86-9800-366031781be7",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiEndpoints" : {
+      "description" : "Cluster endpoint details.",
+      "type" : "object",
+      "properties" : {
+        "etcd" : {
+          "description" : "The cluster etcd endpoint.",
+          "example" : "192.0.2.1:2377",
+          "type" : "string"
+        },
+        "tenantAgent" : {
+          "description" : "The tenant agent endpoint.",
+          "example" : "192.0.2.19:30788",
+          "type" : "string"
+        },
+        "k8" : {
+          "description" : "The Kubernetes master endpoint.",
+          "example" : "a5a19a4776.oke.staging.cluster.oracledx.com:443",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetBmcAdsRequest" : {
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        },
+        "cloudAuthId" : {
+          "description" : "Credential set ID.",
+          "example" : "b6p1na.authconfig.58075df1-ce64...",
+          "type" : "string"
+        },
+        "compartmentOcid" : {
+          "description" : "Compartment ID.",
+          "example" : "ocid1.compartment.oc1..aaaaaaaac6xo...",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetBmcAdsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "ads" : {
+          "description" : "Availability Domain.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiAdstruct"
+          }
+        }
+      }
+    },
+    "clustersapiGetK8SVersionsRequest" : {
+      "description" : "This object contains the details required to get the available Kubernetes versions.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        },
+        "cloudAuthId" : {
+          "description" : "Credential set ID.",
+          "example" : "b6p1na.authconfig.58075df1-ce64...",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetK8SVersionsResponse" : {
+      "description" : "The response to a get available Kubernetes version request.",
+      "type" : "object",
+      "properties" : {
+        "masters" : {
+          "description" : "Kubernetes versions on master nodes.",
+          "type" : "array",
+          "items" : {
+            "example" : "v1.7.0, v1.7.4",
+            "type" : "string"
+          }
+        },
+        "nodes" : {
+          "description" : "Kubernetes versions on worker nodes.",
+          "type" : "array",
+          "items" : {
+            "example" : "v1.7.0, v1.7.4",
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "clustersapiGetNodeImagesRequest" : {
+      "description" : "This object contains the information required to get the available node images.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        },
+        "cloudAuthId" : {
+          "description" : "Credential set ID.",
+          "example" : "b6p1na.authconfig.58075df1-ce64...",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetNodeImagesResponse" : {
+      "description" : "The response to a get available node images request.",
+      "type" : "object",
+      "properties" : {
+        "names" : {
+          "description" : "Array of the available node images.",
+          "type" : "array",
+          "items" : {
+            "description" : "Item description.",
+            "example" : "Oracle-Linux-7.4",
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "clustersapiGetNodeShapesRequest" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        },
+        "cloudAuthId" : {
+          "description" : "Credential set ID.",
+          "example" : "b6p1na.authconfig.58075df1-ce64...",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetNodeShapesResponse" : {
+      "description" : "The response to a get available node shapes request.",
+      "type" : "object",
+      "properties" : {
+        "BareMetal" : {
+          "description" : "Array containing the available node shapes.",
+          "type" : "array",
+          "items" : {
+            "description" : "Available node shapes.",
+            "example" : "VM.Standard1.1, VM.Standard1.2, VM.Standard1.4, VM.Standard1.8, VM.Standard1.16, VM.DenseIO1.4, VM.DenseIO1.8, VM.DenseIO1.16, BM.Standard1.36, BM.HighIO1.36, BM.DenseIO1.36",
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "clustersapiGetRegionRequest" : {
+      "description" : "The response to a get available node shapes.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "5430d21b3141d2c52400005f",
+          "type" : "string"
+        },
+        "cloudAuthId" : {
+          "description" : "Credential set ID.",
+          "example" : "b6p1na.authconfig.58075df1-ce64...",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetRegionResponse" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "description" : "Region name.",
+          "example" : "us-ashburn-1",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiGetWorkItemResponse" : {
+      "description" : "Work item details.",
+      "type" : "object",
+      "properties" : {
+        "tenantId" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "clusterId" : {
+          "description" : "Cluster ID.",
+          "example" : "cbb0a54d85b",
+          "type" : "string"
+        },
+        "id" : {
+          "description" : "Work item ID.",
+          "example" : "993d9a03-bc4c-4709-ad21-68c816267464",
+          "type" : "string"
+        },
+        "type" : {
+          "description" : "Parameter description.",
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "responseError" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "status" : {
+          "description" : "Parameter description.",
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "statusString" : {
+          "description" : "Work item status.",
+          "example" : "Running",
+          "type" : "string"
+        },
+        "createdAt" : {
+          "description" : "Parameter description.",
+          "example" : "2017-10-31T12:43:23.2259584Z",
+          "type" : "string"
+        },
+        "startedAt" : {
+          "description" : "Parameter description.",
+          "example" : "2017-10-31T12:43:22.930991104Z",
+          "type" : "string"
+        },
+        "closedAt" : {
+          "description" : "Parameter description.",
+          "example" : "9999-09-08T23:59:59.68968704Z",
+          "type" : "string"
+        },
+        "lockedUntil" : {
+          "description" : "Parameter description.",
+          "example" : "2017-10-31T13:03:24.63511552Z",
+          "type" : "string"
+        },
+        "tmId" : {
+          "description" : "Parameter description.",
+          "example" : "oke",
+          "type" : "string"
+        },
+        "resourceOwnerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "59bbf8affb1beb01009cae7a",
+          "type" : "string"
+        },
+        "activity" : {
+          "description" : "Array description.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiActivity"
+          }
+        }
+      }
+    },
+    "clustersapiListAuthConfigsResponse" : {
+      "description" : "The list of credential sets.",
+      "type" : "object",
+      "properties" : {
+        "authConfigs" : {
+          "description" : "An array of credential sets.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiAuthConfigInfo"
+          }
+        }
+      }
+    },
+    "clustersapiListResponse" : {
+      "description" : "The list of clusters.",
+      "type" : "object",
+      "properties" : {
+        "clusters" : {
+          "description" : "An array of clusters.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiCluster"
+          }
+        }
+      }
+    },
+    "clustersapiMetadata" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "createdAt" : {
+          "description" : "Cluster creation date.",
+          "example" : "2017-09-29T14:09:08Z",
+          "type" : "string"
+        },
+        "createdBy" : {
+          "description" : "Cluster creator.",
+          "example" : "jsmith",
+          "type" : "string"
+        },
+        "createdByWorkItem" : {
+          "description" : "Creation work item.",
+          "example" : "5cc8df39-a4bf-48cd-ae9d-a59af8fa568d",
+          "type" : "string"
+        },
+        "deletedAt" : {
+          "description" : "Cluster deletion date.",
+          "example" : "",
+          "type" : "string"
+        },
+        "deletedBy" : {
+          "description" : "Cluster deleter.",
+          "example" : "",
+          "type" : "string"
+        },
+        "deletedByWorkItem" : {
+          "description" : "Deletion work item.",
+          "example" : "",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiPool" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "description" : "The name of the pool.",
+          "example" : "pool-1",
+          "type" : "string"
+        },
+        "shape" : {
+          "description" : "The shape, or resource profile, that determines the number of CPUs and amount of memory assigned to each worker node.",
+          "example" : "VM.Standard1.2",
+          "type" : "string"
+        },
+        "imageId" : {
+          "description" : "The OCID of the image to run on this node.",
+          "example" : "ocid1.image.oc1.ash.aaaaaaaabi...",
+          "type" : "string"
+        },
+        "imageName" : {
+          "description" : "The name of the image to run on this node.",
+          "example" : "Oracle-Linux-7.4",
+          "type" : "string"
+        },
+        "workersPerAD" : {
+          "description" : "The number of worker nodes to run per Availability Domain.",
+          "example" : "1",
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "k8Version" : {
+          "description" : "Kubernetes version.",
+          "example" : "v1.7.4",
+          "type" : "string"
+        },
+        "ads" : {
+          "description" : "An array containing the Availability Domains associated with the cluster.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiAd"
+          }
+        }
+      }
+    },
+    "clustersapiRollup" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "provisioning" : {
+          "description" : "Number of nodes being provisioned.",
+          "example" : "0",
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "running" : {
+          "description" : "Number of nodes that are running.",
+          "example" : "6",
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "clustersapiStateDetails" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "nodesRollup" : {
+          "$ref" : "#/definitions/clustersapiRollup"
+        }
+      }
+    },
+    "clustersapiUpdatePoolsRequest" : {
+      "description" : "Information required to update the pools of a cluster.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "59bbf8affb1beb01009cae7a",
+          "type" : "string"
+        },
+        "clusterId" : {
+          "description" : "Cluster ID.",
+          "example" : "a5a19a4776",
+          "type" : "string"
+        },
+        "pools" : {
+          "description" : "Pool properties.",
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/clustersapiPool"
+          }
+        }
+      }
+    },
+    "clustersapiUpdatePoolsResponse" : {
+      "description" : "The response to an update pools request.",
+      "type" : "object",
+      "properties" : {
+        "workItemId" : {
+          "description" : "Work item ID.",
+          "example" : "43e1db49-700f-4b86-9800-366031781be7",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiUpgradeK8SMasterRequest" : {
+      "description" : "Upgrade Kubernetes master request.",
+      "type" : "object",
+      "properties" : {
+        "ownerId" : {
+          "description" : "Wercker organization ID.",
+          "example" : "59bbf8affb1beb01009cae7a",
+          "type" : "string"
+        },
+        "clusterId" : {
+          "description" : "Cluster ID.",
+          "example" : "a5a19a4776",
+          "type" : "string"
+        },
+        "k8sVersion" : {
+          "description" : "Kubernetes version to upgrade to.",
+          "example" : "v1.7.9",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiUpgradeK8SMasterResponse" : {
+      "description" : "Upgrade Kubernetes master response.",
+      "type" : "object",
+      "properties" : {
+        "clusterId" : {
+          "description" : "Cluster ID.",
+          "example" : "a5a19a4776",
+          "type" : "string"
+        },
+        "workItemId" : {
+          "description" : "Work item ID.",
+          "example" : "43e1db49-700f-4b86-9800-366031781be7",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiVersion" : {
+      "description" : "This object contains API details.",
+      "type" : "object",
+      "properties" : {
+        "gitCommit" : {
+          "description" : "The git commit ID",
+          "example" : "940e1d32173cf15e3bfdd656b245f7747d52144a",
+          "type" : "string"
+        },
+        "version" : {
+          "description" : "API version.",
+          "example" : "1.2.10.11",
+          "type" : "string"
+        },
+        "release" : {
+          "description" : "Release branch.",
+          "example" : "origin/master",
+          "type" : "string"
+        },
+        "buildHost" : {
+          "description" : "The ID of the build host.",
+          "example" : "5a23afb73827",
+          "type" : "string"
+        },
+        "buildDate" : {
+          "description" : "API build date.",
+          "example" : "2017-10-11T18:22:33Z",
+          "type" : "string"
+        },
+        "buildBranch" : {
+          "description" : "Build branch.",
+          "example" : "origin/master",
+          "type" : "string"
+        }
+      }
+    },
+    "clustersapiWorkerDetails" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "availabilityDomain" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "bmcLifecycleState" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "compartmentId" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "error" : {
+          "description" : "Parameter description.",
+          "$ref" : "#/definitions/clustersapiWorkerErrors"
+        },
+        "id" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "imageId" : {
+          "description" : "Parameter description.",
+          "example" : "ocid1.image.oc1.ash.aaaaaaaabi...",
+          "type" : "string"
+        },
+        "k8Version" : {
+          "description" : "Kubernetes version.",
+          "example" : "v1.7.4",
+          "type" : "string"
+        },
+        "name" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "pool" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "publicIp" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "region" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "shape" : {
+          "description" : "Parameter description.",
+          "example" : "VM.Standard1.2",
+          "type" : "string"
+        },
+        "slot" : {
+          "description" : "Parameter description.",
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "subnetId" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "workerStatus" : {
+          "description" : "Parameter description.",
+          "type" : "string"
+        },
+        "imageName" : {
+          "type" : "string",
+          "description" : "Parameter description.",
+          "example" : "Oracle-Linux-7.4"
+        },
+        "compartmentName" : {
+          "type" : "string",
+          "description" : "Parameter description."
+        }
+      }
+    },
+    "clustersapiWorkerErrors" : {
+      "description" : "Schema description.",
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "protobufEmpty" : {
+      "type" : "object",
+      "description" : "service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "title" : "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:"
+    }
+  }
+}
