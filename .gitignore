@@ -1,0 +1,11 @@
+_state*
+.idea*
+.DS_Store
+bin/*
+.idea/
+oracle-oke-client.iml
+.oracle-oke-client
+oracle-oke-client
+conf/config.yaml
+*.swp
+dummy_plugin/dummy_plugin
