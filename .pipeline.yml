@@ -30,10 +30,10 @@ pipeline:
     # when:
     #   event: tag
     
-  deploy_monitoring:
-    image: banzaicloud/plugin-pipeline-client:nodejs
-    deployment_name: "banzaicloud-stable/pipeline-cluster-monitor"
-    deployment_release_name: "monitor"
-
-    secrets: [plugin_endpoint, plugin_token]
+  #deploy_monitoring:
+  #  image: banzaicloud/plugin-pipeline-client:nodejs
+  #  deployment_name: "banzaicloud-stable/pipeline-cluster-monitor"
+  #  deployment_release_name: "monitor"
+  #
+  #  secrets: [plugin_endpoint, plugin_token]
 
