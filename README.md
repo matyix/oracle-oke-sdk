@@ -6,4 +6,4 @@ Currently the OKE service Golang SDK is binding is not available - it will be pa
 The SDK is build on the Wercker Swagger [specification](https://apicatalog.oraclecloud.com/ui/views/apicollection/oracle-public/odx-oke/1.0) and it's for internal use. 
 
 
-TRIGGER
+
