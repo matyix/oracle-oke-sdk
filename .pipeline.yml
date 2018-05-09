@@ -1,0 +1,18 @@
+
+pipeline:
+
+# this step creates a Kubernetes cluster on a cloud provider
+  create_cluster:
+    image: banzaicloud/plugin-pipeline-client:oracle-oke-sdk
+    pull: true
+    cluster_name: "{{cluster-name}}"
+    cluster_provider: "google"
+    google_project: "{{your-project-id}}"
+    google_node_count: "2"
+    google_gke_version: "1.9.6-gke.1"
+    secrets: [plugin_endpoint, plugin_token, plugin_secret_id]
+
+# this step clones the project to the Kubernetes cluster
+  remote_checkout:
+    image: banzaicloud/plugin-k8s-proxy:oracle-oke-sdk
+    original_image: plugins/git
