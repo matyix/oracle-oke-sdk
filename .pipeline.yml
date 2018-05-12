@@ -17,23 +17,5 @@ pipeline:
     image: banzaicloud/plugin-k8s-proxy:oracle-oke-sdk
     original_image: plugins/git
 
-# this step builds and uploads the application image to the image registry (docker)
-  build_container:
-    image: banzaicloud/plugin-k8s-proxy:oracle-oke-sdk
-    original_image: plugins/docker
-    dockerfile: Dockerfile
-    repo: matyix/oracle-oke-sdk
-    tags: "{{ printf \"dev-%s\" (.DRONE_COMMIT_SHA | trunc 7) }}"
-    log: debug
-    secrets: [plugin_endpoint, plugin_token, plugin_username, plugin_password]
-    group: test123
-    # when:
-    #   event: tag
-    
-  #deploy_monitoring:
-  #  image: banzaicloud/plugin-pipeline-client:nodejs
-  #  deployment_name: "banzaicloud-stable/pipeline-cluster-monitor"
-  #  deployment_release_name: "monitor"
-  #
-  #  secrets: [plugin_endpoint, plugin_token]
+
 
